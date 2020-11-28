@@ -13,6 +13,6 @@ public class EmployeeResponse {
     public EmployeeResponse(EmployeeEntity entity) {
         this.login = entity.getLogin();
         this.role = entity.getRole().name();
-        this.fio = String.format("%s %s %s", entity.getFirstName(), entity.getMiddleName(), entity.getLastName());
+        this.fio = String.format("%s %s %s", entity.getLastName(), entity.getFirstName(), entity.getMiddleName());
     }
 }

@@ -1,6 +1,5 @@
 package com.system.accounting.service.registration;
 
-import com.system.accounting.model.dto.BaseResponse;
 import com.system.accounting.model.dto.employee.EmployeeCreateRequest;
 import com.system.accounting.model.dto.employee.EmployeesResponse;
 import com.system.accounting.model.entity.EmployeeEntity;
