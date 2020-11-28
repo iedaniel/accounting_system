@@ -2,6 +2,7 @@ package com.system.accounting.service.registration;
 
 import com.system.accounting.model.dto.BaseResponse;
 import com.system.accounting.model.dto.employee.EmployeeCreateRequest;
+import com.system.accounting.model.dto.employee.EmployeesResponse;
 import com.system.accounting.model.entity.EmployeeEntity;
 import com.system.accounting.model.entity.EmployeeType;
 import com.system.accounting.service.repository.EmployeeRepository;
@@ -9,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
-public class RegistrationService {
+public class UsersService {
 
     private final EmployeeRepository employeeRepository;
 
@@ -25,5 +28,11 @@ public class RegistrationService {
         employeeEntity.setMiddleName(request.getMiddleName());
         employeeEntity.setLastName(request.getLastName());
         employeeRepository.save(employeeEntity);
+    }
+
+    @Transactional
+    public EmployeesResponse getEmployees() {
+        List<EmployeeEntity> entities = employeeRepository.findAll();
+        return new EmployeesResponse(entities);
     }
 }
