@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+target/accounting-0.0.1-SNAPSHOT.jar
