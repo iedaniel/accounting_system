@@ -25,6 +25,7 @@ public class UsersController {
     }
 
     @GetMapping
+    @ApiOperation("Метод получения профилей пользователей")
     public BaseResponse<EmployeesResponse> getUsers() {
         return new BaseResponse<>(usersService.getEmployees());
     }
