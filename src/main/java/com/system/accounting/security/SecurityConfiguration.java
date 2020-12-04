@@ -11,7 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] allowedUrls = {
-            "users/registration/**",
+            "/users/registration/**",
+            "/ping/**",
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources/**",
