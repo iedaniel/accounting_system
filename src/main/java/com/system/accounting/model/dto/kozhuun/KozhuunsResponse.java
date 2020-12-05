@@ -1,4 +1,4 @@
-package com.system.accounting.model.kozhuun;
+package com.system.accounting.model.dto.kozhuun;
 
 import com.system.accounting.model.entity.KozhuunEntity;
 import lombok.Getter;

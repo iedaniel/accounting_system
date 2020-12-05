@@ -1,8 +1,8 @@
 package com.system.accounting.controller;
 
 import com.system.accounting.model.dto.BaseResponse;
-import com.system.accounting.model.kozhuun.KozhuunCreateRequest;
-import com.system.accounting.model.kozhuun.KozhuunsResponse;
+import com.system.accounting.model.dto.kozhuun.KozhuunCreateRequest;
+import com.system.accounting.model.dto.kozhuun.KozhuunsResponse;
 import com.system.accounting.service.kozhuun.KozhuunService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -4,4 +4,6 @@ import com.system.accounting.model.entity.KozhuunEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface KozhuunRepository extends JpaRepository<KozhuunEntity, Long> {
+
+    KozhuunEntity findByName(String name);
 }

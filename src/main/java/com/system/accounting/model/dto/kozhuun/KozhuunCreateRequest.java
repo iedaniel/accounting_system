@@ -1,4 +1,4 @@
-package com.system.accounting.model.kozhuun;
+package com.system.accounting.model.dto.kozhuun;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,8 +2,8 @@ package com.system.accounting.service.kozhuun;
 
 import com.system.accounting.model.entity.EmployeeEntity;
 import com.system.accounting.model.entity.KozhuunEntity;
-import com.system.accounting.model.kozhuun.KozhuunCreateRequest;
-import com.system.accounting.model.kozhuun.KozhuunsResponse;
+import com.system.accounting.model.dto.kozhuun.KozhuunCreateRequest;
+import com.system.accounting.model.dto.kozhuun.KozhuunsResponse;
 import com.system.accounting.service.UserInfoService;
 import com.system.accounting.service.repository.EmployeeRepository;
 import com.system.accounting.service.repository.KozhuunRepository;
