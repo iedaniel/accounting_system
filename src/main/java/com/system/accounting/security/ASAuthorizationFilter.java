@@ -4,7 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.system.accounting.model.dto.BaseResponse;
 import com.system.accounting.util.HttpResponseWriter;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.Optional;
 
-@Slf4j
 public class ASAuthorizationFilter extends HttpFilter {
 
     @Override
@@ -27,7 +28,6 @@ public class ASAuthorizationFilter extends HttpFilter {
             chain.doFilter(request, response);
             return;
         }
-
         DecodedJWT decodedToken = JWT.decode(token);
         boolean isExpired = decodedToken.getExpiresAt().before(Date.from(Instant.now()));
         if (isExpired) {
@@ -35,9 +35,12 @@ public class ASAuthorizationFilter extends HttpFilter {
             chain.doFilter(request, response);
             return;
         }
-
-        log.info("\n\nПолучили запрос от " + decodedToken.getSubject());
-
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(
+                        null,
+                        decodedToken.getSubject(),
+                        Collections.emptyList())
+        );
         chain.doFilter(request, response);
     }
 
