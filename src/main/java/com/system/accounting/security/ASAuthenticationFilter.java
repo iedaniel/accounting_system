@@ -3,9 +3,11 @@ package com.system.accounting.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.system.accounting.model.dto.BaseResponse;
 import com.system.accounting.model.dto.UserLogin;
 import com.system.accounting.model.entity.EmployeeEntity;
 import com.system.accounting.service.repository.EmployeeRepository;
+import com.system.accounting.util.HttpResponseWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -30,7 +32,8 @@ public class ASAuthenticationFilter extends UsernamePasswordAuthenticationFilter
                 user.getPassword()
         );
         if (employeeEntity == null) {
-            throw new RuntimeException("Введены неверные данные");
+            new HttpResponseWriter(response).write(new BaseResponse<>("Cannot find user with such login and password"));
+            return null;
         }
 
         String token = JWT.create()
@@ -39,6 +42,7 @@ public class ASAuthenticationFilter extends UsernamePasswordAuthenticationFilter
                 .withClaim("role", employeeEntity.getRole().name())
                 .sign(Algorithm.HMAC512("test"));
         response.addHeader("Token", token);
+        new HttpResponseWriter(response).write(new BaseResponse<>());
         return null;
     }
 
@@ -46,7 +50,7 @@ public class ASAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         try {
             return new ObjectMapper().readValue(request.getInputStream(), UserLogin.class);
         } catch (IOException e) {
-            throw new RuntimeException("Не получилось извлечь данные пользователя из запроса");
+            throw new RuntimeException("Cannot read login request");
         }
     }
 }

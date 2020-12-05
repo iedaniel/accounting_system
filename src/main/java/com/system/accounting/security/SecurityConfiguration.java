@@ -4,6 +4,7 @@ import com.system.accounting.service.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
@@ -26,10 +27,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers(allowedUrls).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(new ASAuthenticationFilter(employeeRepository));
+                .addFilter(new ASAuthenticationFilter(employeeRepository))
+                .addFilterAfter(new ASAuthorizationFilter(), ASAuthenticationFilter.class);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(allowedUrls);
     }
 }
