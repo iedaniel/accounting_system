@@ -1,8 +1,8 @@
 package com.system.accounting.model.dto;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class UserLogin {
 
     private String username;
