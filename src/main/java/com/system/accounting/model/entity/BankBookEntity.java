@@ -1,10 +1,12 @@
 package com.system.accounting.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -45,4 +47,7 @@ public class BankBookEntity {
 
     @Column(name = "additional_info")
     private String additionalInfo;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankBook")
+    private List<BankBookToFarmAnimalEntity> farmAnimals;
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface BankBookRepository extends JpaRepository<BankBookEntity, Long> {
 
     List<BankBookEntity> findAllByHouseholdBookNameAndHouseholdBookKozhuunName(String household, String kozhuun);
+
+    BankBookEntity findByNameAndHouseholdBookNameAndHouseholdBookKozhuunName(String name, String houseName, String kozhuunName);
 }
