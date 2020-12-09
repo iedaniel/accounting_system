@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.cors().disable().csrf().disable()
                 .addFilter(new ASAuthenticationFilter(employeeRepository))
                 .addFilterAfter(new ASAuthorizationFilter(), ASAuthenticationFilter.class);
     }
