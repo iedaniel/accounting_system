@@ -12,4 +12,8 @@ public class BankBookCreateRequest {
     private String name;
     private String householdBookName;
     private String kozhuunName;
+    private String address;
+    private String cadastralNumber;
+    private String inn;
+    private String additionalInfo;
 }

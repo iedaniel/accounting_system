@@ -33,4 +33,16 @@ public class BankBookEntity {
 
     @Column(name = "closing_reason")
     private String closingReason;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "cadastral_number")
+    private String cadastralNumber;
+
+    @Column(name = "inn")
+    private String inn;
+
+    @Column(name = "additional_info")
+    private String additionalInfo;
 }

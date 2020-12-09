@@ -24,6 +24,9 @@ public class HouseholdBookService {
     @Transactional
     public void createHouseholdBook(HouseholdBookCreateRequest request) {
         KozhuunEntity kozhuun = kozhuunRepository.findByName(request.getKozhuunName());
+        if (kozhuun == null) {
+            throw new RuntimeException("Кожуун не найден");
+        }
         HouseholdBookEntity entity = new HouseholdBookEntity();
         entity.setName(request.getName());
         entity.setKozhuun(kozhuun);

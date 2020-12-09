@@ -28,10 +28,17 @@ public class BankBookService {
                 request.getHouseholdBookName(),
                 request.getKozhuunName()
         );
+        if (householdBook == null) {
+            throw new RuntimeException("Похозяйственная книга не найдена");
+        }
         BankBookEntity entity = new BankBookEntity();
         entity.setName(request.getName());
         entity.setHouseholdBook(householdBook);
         entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
+        entity.setAddress(request.getAddress());
+        entity.setCadastralNumber(request.getCadastralNumber());
+        entity.setInn(request.getInn());
+        entity.setAdditionalInfo(request.getAdditionalInfo());
         bankBookRepository.save(entity);
     }
 
