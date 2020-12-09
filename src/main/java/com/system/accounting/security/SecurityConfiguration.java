@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] allowedUrls = {
+            "/login",
             "/users/registration/**",
             "/ping/**",
             "/v2/api-docs",
@@ -26,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().disable().csrf().disable()
+        http.csrf().disable()
                 .addFilter(new ASAuthenticationFilter(employeeRepository))
                 .addFilterAfter(new ASAuthorizationFilter(), ASAuthenticationFilter.class);
     }
