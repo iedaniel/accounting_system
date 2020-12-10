@@ -7,6 +7,8 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
+import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
+import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
 import com.system.accounting.service.bank_book.BankBookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,5 +50,18 @@ public class BankBookController {
     @ApiOperation("Показ всех животных для заданного лицевого счета")
     public BaseResponse<BookFarmAnimalsResponse> farmAnimals(@RequestBody BankBookSpecifierRequest request) {
         return new BaseResponse<>(bankBookService.getAnimals(request));
+    }
+
+    @PostMapping("/residents/add")
+    @ApiOperation("Добавление членов хозяйства")
+    public BaseResponse<?> addResidents(@RequestBody AddResidentsRequest request) {
+        bankBookService.addResidents(request);
+        return new BaseResponse<>();
+    }
+
+    @PostMapping("/residents")
+    @ApiOperation("Отображение всех членов хозяйства")
+    public BaseResponse<BookResidentsResponse> residents(@RequestBody BankBookSpecifierRequest request) {
+        return new BaseResponse<>(bankBookService.getResidents(request));
     }
 }

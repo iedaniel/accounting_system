@@ -6,10 +6,9 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
-import com.system.accounting.model.entity.BankBookEntity;
-import com.system.accounting.model.entity.BankBookToFarmAnimalEntity;
-import com.system.accounting.model.entity.FarmAnimalEntity;
-import com.system.accounting.model.entity.HouseholdBookEntity;
+import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
+import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
+import com.system.accounting.model.entity.*;
 import com.system.accounting.service.UserInfoService;
 import com.system.accounting.service.repository.BankBookRepository;
 import com.system.accounting.service.repository.EmployeeRepository;
@@ -84,7 +83,35 @@ public class BankBookService {
     @Transactional
     public BookFarmAnimalsResponse getAnimals(BankBookSpecifierRequest request) {
         BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
         return new BookFarmAnimalsResponse(bankBook.getFarmAnimals());
+    }
+
+    @Transactional
+    public void addResidents(AddResidentsRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        List<ResidentEntity> residents = request.getResidents().stream()
+                .map(resident -> new ResidentEntity(resident, bankBook))
+                .peek(e -> {
+                    e.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
+                    if (e.getPassport() != null) {
+                        e.getPassport().setResident(e);
+                        e.getPassport().setCreator(e.getCreator());
+                    }
+                })
+                .collect(Collectors.toList());
+        bankBook.getResidents().addAll(residents);
+    }
+
+    @Transactional
+    public BookResidentsResponse getResidents(BankBookSpecifierRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        return new BookResidentsResponse(bankBook.getResidents());
     }
 
     private BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {

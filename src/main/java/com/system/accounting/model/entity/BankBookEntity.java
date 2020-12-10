@@ -50,4 +50,7 @@ public class BankBookEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankBook")
     private List<BankBookToFarmAnimalEntity> farmAnimals;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankBook")
+    private List<ResidentEntity> residents;
 }
