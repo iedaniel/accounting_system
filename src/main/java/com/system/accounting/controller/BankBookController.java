@@ -7,6 +7,9 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
+import com.system.accounting.model.dto.bank_book.land_types.AddLandTypesRequest;
+import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
+import com.system.accounting.model.dto.bank_book.lands.LandsResponse;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
 import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
 import com.system.accounting.service.bank_book.BankBookService;
@@ -64,4 +67,26 @@ public class BankBookController {
     public BaseResponse<BookResidentsResponse> residents(@RequestBody BankBookSpecifierRequest request) {
         return new BaseResponse<>(bankBookService.getResidents(request));
     }
+
+    @PostMapping("/lands/add")
+    @ApiOperation("Добавить информацию о земельном участке")
+    public BaseResponse<?> addLand(@RequestBody LandCreateRequest request) {
+        bankBookService.addLand(request);
+        return new BaseResponse<>();
+    }
+
+    @PostMapping("/lands")
+    @ApiOperation("Показ информации о земельных участках")
+    public BaseResponse<LandsResponse> getLands(@RequestBody BankBookSpecifierRequest request) {
+        return new BaseResponse<>(bankBookService.getLands(request));
+    }
+
+    @PostMapping("/land_types/add")
+    @ApiOperation("Добавить информацию о земельном участке")
+    public BaseResponse<?> addLandTypes(@RequestBody AddLandTypesRequest request) {
+        bankBookService.addLandTypes(request);
+        return new BaseResponse<>();
+    }
+
+
 }

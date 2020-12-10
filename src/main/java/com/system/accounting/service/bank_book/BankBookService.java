@@ -6,18 +6,20 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
+import com.system.accounting.model.dto.bank_book.land_types.AddLandTypesRequest;
+import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
+import com.system.accounting.model.dto.bank_book.lands.LandsResponse;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
 import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
 import com.system.accounting.model.entity.*;
 import com.system.accounting.service.UserInfoService;
-import com.system.accounting.service.repository.BankBookRepository;
-import com.system.accounting.service.repository.EmployeeRepository;
-import com.system.accounting.service.repository.FarmAnimalRepository;
-import com.system.accounting.service.repository.HouseholdBookRepository;
+import com.system.accounting.service.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,8 @@ public class BankBookService {
     private final BankBookRepository bankBookRepository;
     private final UserInfoService userInfoService;
     private final FarmAnimalRepository farmAnimalRepository;
+    private final LandTypeRepository landTypeRepository;
+    private final LandRepository landRepository;
 
     @Transactional
     public void createBankBook(BankBookCreateRequest request) {
@@ -111,7 +115,58 @@ public class BankBookService {
     @Transactional
     public BookResidentsResponse getResidents(BankBookSpecifierRequest request) {
         BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
         return new BookResidentsResponse(bankBook.getResidents());
+    }
+
+    @Transactional
+    public void addLand(LandCreateRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        LandEntity entity = new LandEntity();
+        entity.setBankBook(bankBook);
+        entity.setCadastralNumber(request.getCadastralNumber());
+        entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
+        entity.setDocument(request.getDocument());
+        entity.setDocumentEndDate(LocalDate.parse(request.getDocumentEndDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        entity.setLandCategory(request.getLandCategory());
+        entity.setTotalArea(request.getTotalArea());
+        bankBook.getLands().add(entity);
+    }
+
+    @Transactional
+    public LandsResponse getLands(BankBookSpecifierRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        return new LandsResponse(bankBook.getLands());
+    }
+
+    @Transactional
+    public void addLandTypes(AddLandTypesRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        LandEntity land = landRepository.findByBankBookAndCadastralNumber(bankBook, request.getLand());
+        EmployeeEntity creator = employeeRepository.findByLogin(userInfoService.currentUserLogin());
+        List<BankBookToLandTypeEntity> landTypes = request.getLandTypes().stream()
+                .map(landType -> {
+                    LandTypeEntity landTypeEntity = landTypeRepository.findByName(landType.getLandType());
+                    BankBookToLandTypeEntity entity = new BankBookToLandTypeEntity();
+                    entity.setLand(land);
+                    entity.setLandType(landTypeEntity);
+                    entity.setValue(landType.getValue());
+                    entity.setCreator(creator);
+                    return entity;
+                })
+                .collect(Collectors.toList());
+        land.getLandTypes().addAll(landTypes);
     }
 
     private BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {

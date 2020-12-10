@@ -1,0 +1,18 @@
+package com.system.accounting.model.dto.bank_book.lands;
+
+import com.system.accounting.model.entity.BankBookToLandTypeEntity;
+import lombok.Getter;
+
+@Getter
+public class LandTypeAreaResponse {
+
+    private final String landType;
+    private final String value;
+    private final String creatorName;
+
+    public LandTypeAreaResponse(BankBookToLandTypeEntity entity) {
+        this.landType = entity.getLandType().getName();
+        this.value = entity.getValue();
+        this.creatorName = entity.getCreator().getLogin();
+    }
+}
