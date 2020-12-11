@@ -18,6 +18,7 @@ public class LandResponse {
     private final String documentEndDate;
     private final String creatorName;
     private final List<LandTypeAreaResponse> landTypes;
+    private final List<LandAgricultureResponse> agricultures;
 
     public LandResponse(LandEntity entity) {
         this.cadastralNumber = entity.getCadastralNumber();
@@ -29,6 +30,11 @@ public class LandResponse {
                 .orElse(Collections.emptyList())
                 .stream()
                 .map(LandTypeAreaResponse::new)
+                .collect(Collectors.toList());
+        this.agricultures = Optional.ofNullable(entity.getAgricultures())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(LandAgricultureResponse::new)
                 .collect(Collectors.toList());
         this.creatorName = entity.getCreator().getLogin();
     }

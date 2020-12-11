@@ -6,7 +6,8 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
-import com.system.accounting.model.dto.bank_book.land_types.AddLandTypesRequest;
+import com.system.accounting.model.dto.bank_book.lands.agricultures.AddAgriculturesRequest;
+import com.system.accounting.model.dto.bank_book.lands.land_types.AddLandTypesRequest;
 import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
 import com.system.accounting.model.dto.bank_book.lands.LandsResponse;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
@@ -38,6 +39,7 @@ public class BankBookService {
     private final FarmAnimalRepository farmAnimalRepository;
     private final LandTypeRepository landTypeRepository;
     private final LandRepository landRepository;
+    private final AgricultureRepository agricultureRepository;
 
     @Transactional
     public void createBankBook(BankBookCreateRequest request) {
@@ -167,6 +169,28 @@ public class BankBookService {
                 })
                 .collect(Collectors.toList());
         land.getLandTypes().addAll(landTypes);
+    }
+
+    @Transactional
+    public void addAgricultures(AddAgriculturesRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        LandEntity land = landRepository.findByBankBookAndCadastralNumber(bankBook, request.getLand());
+        EmployeeEntity creator = employeeRepository.findByLogin(userInfoService.currentUserLogin());
+        List<LandToAgricultureEntity> agricultures = request.getAgricultures().stream()
+                .map(agricultureDto -> {
+                    AgricultureEntity agriculture = agricultureRepository.findByName(agricultureDto.getAgriculture());
+                    LandToAgricultureEntity entity = new LandToAgricultureEntity();
+                    entity.setLand(land);
+                    entity.setAgriculture(agriculture);
+                    entity.setCreator(creator);
+                    entity.setArea(agricultureDto.getValue());
+                    return entity;
+                })
+                .collect(Collectors.toList());
+        land.getAgricultures().addAll(agricultures);
     }
 
     private BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {

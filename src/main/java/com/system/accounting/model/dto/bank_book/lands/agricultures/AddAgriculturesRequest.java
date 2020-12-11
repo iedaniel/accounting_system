@@ -1,4 +1,4 @@
-package com.system.accounting.model.dto.bank_book.land_types;
+package com.system.accounting.model.dto.bank_book.lands.agricultures;
 
 
 import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
@@ -11,8 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddLandTypesRequest extends BankBookSpecifierRequest {
+public class AddAgriculturesRequest extends BankBookSpecifierRequest {
 
     private String land;
-    List<LandTypeDto> landTypes;
+    List<AgricultureDto> agricultures;
 }

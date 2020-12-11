@@ -7,7 +7,8 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
-import com.system.accounting.model.dto.bank_book.land_types.AddLandTypesRequest;
+import com.system.accounting.model.dto.bank_book.lands.agricultures.AddAgriculturesRequest;
+import com.system.accounting.model.dto.bank_book.lands.land_types.AddLandTypesRequest;
 import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
 import com.system.accounting.model.dto.bank_book.lands.LandsResponse;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
@@ -88,5 +89,10 @@ public class BankBookController {
         return new BaseResponse<>();
     }
 
-
+    @PostMapping("/agricultures/add")
+    @ApiOperation("Добавить информацию о земельных культурах")
+    public BaseResponse<?> addAgricultures(@RequestBody AddAgriculturesRequest request) {
+        bankBookService.addAgricultures(request);
+        return new BaseResponse<>();
+    }
 }
