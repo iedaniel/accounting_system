@@ -6,6 +6,8 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
+import com.system.accounting.model.dto.bank_book.lands.LandResponse;
+import com.system.accounting.model.dto.bank_book.lands.LandSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.lands.agricultures.AddAgriculturesRequest;
 import com.system.accounting.model.dto.bank_book.lands.land_types.AddLandTypesRequest;
 import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
@@ -191,6 +193,19 @@ public class BankBookService {
                 })
                 .collect(Collectors.toList());
         land.getAgricultures().addAll(agricultures);
+    }
+
+    @Transactional
+    public LandResponse getLand(LandSpecifierRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        LandEntity land = landRepository.findByBankBookAndCadastralNumber(bankBook, request.getCadastralNumber());
+        if (land == null) {
+            throw new RuntimeException("Не найден земельный участок");
+        }
+        return new LandResponse(land);
     }
 
     private BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {
