@@ -1,7 +1,6 @@
 package com.system.accounting.model.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -38,9 +37,6 @@ public class BankBookEntity {
 
     @Column(name = "address")
     private String address;
-
-    @Column(name = "cadastral_number")
-    private String cadastralNumber;
 
     @Column(name = "inn")
     private String inn;

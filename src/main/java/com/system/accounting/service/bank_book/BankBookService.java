@@ -57,7 +57,6 @@ public class BankBookService {
         entity.setHouseholdBook(householdBook);
         entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
         entity.setAddress(request.getAddress());
-        entity.setCadastralNumber(request.getCadastralNumber());
         entity.setInn(request.getInn());
         entity.setAdditionalInfo(request.getAdditionalInfo());
         bankBookRepository.save(entity);
