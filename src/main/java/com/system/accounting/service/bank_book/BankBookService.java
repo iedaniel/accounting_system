@@ -42,6 +42,7 @@ public class BankBookService {
     private final LandTypeRepository landTypeRepository;
     private final LandRepository landRepository;
     private final AgricultureRepository agricultureRepository;
+    private final LandCategoryRepository landCategoryRepository;
 
     @Transactional
     public void createBankBook(BankBookCreateRequest request) {
@@ -130,13 +131,17 @@ public class BankBookService {
         if (bankBook == null) {
             throw new RuntimeException("Не найден лицевой счёт");
         }
+        LandCategoryEntity landCategory = landCategoryRepository.findByName(request.getLandCategory());
+        if (landCategory == null) {
+            throw new RuntimeException("Не удалось найти указанную земельную категорию");
+        }
         LandEntity entity = new LandEntity();
         entity.setBankBook(bankBook);
         entity.setCadastralNumber(request.getCadastralNumber());
         entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
         entity.setDocument(request.getDocument());
         entity.setDocumentEndDate(LocalDate.parse(request.getDocumentEndDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        entity.setLandCategory(request.getLandCategory());
+        entity.setLandCategory(landCategory);
         entity.setTotalArea(request.getTotalArea());
         bankBook.getLands().add(entity);
     }

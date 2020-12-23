@@ -3,6 +3,7 @@ package com.system.accounting.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.util.Lazy;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,8 +28,9 @@ public class LandEntity {
     @Column(name = "cadastral_number")
     private String cadastralNumber;
 
-    @Column(name = "land_category")
-    private String landCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "land_category_id")
+    private LandCategoryEntity landCategory;
 
     @Column(name = "total_area")
     private String totalArea;

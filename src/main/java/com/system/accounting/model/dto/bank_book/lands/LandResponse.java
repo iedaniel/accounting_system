@@ -22,7 +22,7 @@ public class LandResponse {
 
     public LandResponse(LandEntity entity) {
         this.cadastralNumber = entity.getCadastralNumber();
-        this.landCategory = entity.getLandCategory();
+        this.landCategory = entity.getLandCategory().getName();
         this.totalArea = entity.getTotalArea();
         this.document = entity.getDocument();
         this.documentEndDate = entity.getDocumentEndDate().toString();
