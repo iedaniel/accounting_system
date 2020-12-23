@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "bank_book_to_land_type")
+@Table(name = "land_to_land_type")
 @NoArgsConstructor
 public class BankBookToLandTypeEntity {
 
