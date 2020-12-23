@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Getter
 public class HouseholdBooksResponse {
 
-    private List<HouseholdBookResponse> householdBooks;
+    private final List<HouseholdBookResponse> householdBooks;
 
     public HouseholdBooksResponse(List<HouseholdBookEntity> entities) {
         this.householdBooks = entities.stream()

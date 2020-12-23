@@ -11,4 +11,5 @@ public class HouseholdBookCreateRequest {
 
     private String name;
     private String kozhuunName;
+    private String villageName;
 }

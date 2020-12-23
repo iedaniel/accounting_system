@@ -20,6 +20,9 @@ public class HouseholdBookEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "village_name")
+    private String villageName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kozhuun_id")
     private KozhuunEntity kozhuun;

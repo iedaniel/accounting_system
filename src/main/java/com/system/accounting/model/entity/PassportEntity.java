@@ -46,6 +46,6 @@ public class PassportEntity {
         this.passportSeries = passport.getPassportSeries();
         this.passportId = passport.getPassportId();
         this.issuingAuthority = passport.getIssuingAuthority();
-        this.issueDate = LocalDate.parse(passport.getIssueDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        this.issueDate = passport.getIssueDate();
     }
 }

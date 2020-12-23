@@ -7,11 +7,13 @@ import lombok.Getter;
 public class HouseholdBookResponse {
 
     private final String name;
+    private final String villageName;
     private final String kozhuunName;
     private final String creatorName;
 
     public HouseholdBookResponse(HouseholdBookEntity entity) {
         this.name = entity.getName();
+        this.villageName = entity.getVillageName();
         this.kozhuunName = entity.getKozhuun().getName();
         this.creatorName = entity.getCreator().getLogin();
     }

@@ -1,10 +1,12 @@
 package com.system.accounting.model.dto.bank_book.residents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.system.accounting.model.entity.ResidentEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Getter
@@ -15,7 +17,8 @@ public class ResidentDto {
     private String name;
     private String relation;
     private String gender;
-    private String birthDate;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDate birthDate;
     private String residenceMark;
     private PassportDto passport;
 
@@ -23,7 +26,7 @@ public class ResidentDto {
         this.name = entity.getName();
         this.relation = entity.getRelation();
         this.gender = entity.getGender();
-        this.birthDate = entity.getBirthDate().toString();
+        this.birthDate = entity.getBirthDate();
         this.residenceMark = entity.getResidenceMark();
         this.passport = Optional.ofNullable(entity.getPassport())
                 .map(PassportDto::new)

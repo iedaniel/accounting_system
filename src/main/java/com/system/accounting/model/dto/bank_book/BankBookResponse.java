@@ -1,7 +1,6 @@
 package com.system.accounting.model.dto.bank_book;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.system.accounting.model.entity.BankBookEntity;
 import lombok.Getter;
 
@@ -12,12 +11,14 @@ public class BankBookResponse {
 
     private final String name;
     private final String creatorName;
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "dd.MM.yyyy")
     private final LocalDate closingDate;
     private final String closingReason;
     private final String address;
     private final String inn;
     private final String additionalInfo;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private final LocalDate creationDate;
 
     public BankBookResponse(BankBookEntity entity) {
         this.name = entity.getName();
@@ -27,5 +28,6 @@ public class BankBookResponse {
         this.address = entity.getAddress();
         this.inn = entity.getInn();
         this.additionalInfo = entity.getAdditionalInfo();
+        this.creationDate = entity.getCreationDate();
     }
 }

@@ -55,7 +55,7 @@ public class ResidentEntity {
         this.bankBook = bankBook;
         this.relation = request.getRelation();
         this.gender = request.getGender();
-        this.birthDate = LocalDate.parse(request.getBirthDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        this.birthDate = request.getBirthDate();
         this.residenceMark = request.getResidenceMark();
         this.passport = Optional.ofNullable(request.getPassport())
                 .map(PassportEntity::new)

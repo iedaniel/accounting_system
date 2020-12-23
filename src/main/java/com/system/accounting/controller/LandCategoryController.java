@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/land_category")
 @RequiredArgsConstructor
+@Api("Земельные категории")
 public class LandCategoryController {
 
     private final LandCategoryService landCategoryService;

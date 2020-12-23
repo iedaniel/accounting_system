@@ -32,6 +32,9 @@ public class BankBookEntity {
     @Column(name = "closing_date")
     private LocalDate closingDate;
 
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
+
     @Column(name = "closing_reason")
     private String closingReason;
 

@@ -29,6 +29,7 @@ public class HouseholdBookService {
         }
         HouseholdBookEntity entity = new HouseholdBookEntity();
         entity.setName(request.getName());
+        entity.setVillageName(request.getVillageName());
         entity.setKozhuun(kozhuun);
         entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
         householdBookRepository.save(entity);

@@ -54,6 +54,7 @@ public class BankBookService {
             throw new RuntimeException("Похозяйственная книга не найдена");
         }
         BankBookEntity entity = new BankBookEntity();
+        entity.setCreationDate(request.getCreationDate());
         entity.setName(request.getName());
         entity.setHouseholdBook(householdBook);
         entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
@@ -140,7 +141,7 @@ public class BankBookService {
         entity.setCadastralNumber(request.getCadastralNumber());
         entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
         entity.setDocument(request.getDocument());
-        entity.setDocumentEndDate(LocalDate.parse(request.getDocumentEndDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        entity.setDocumentEndDate(request.getDocumentEndDate());
         entity.setLandCategory(landCategory);
         entity.setTotalArea(request.getTotalArea());
         bankBook.getLands().add(entity);
