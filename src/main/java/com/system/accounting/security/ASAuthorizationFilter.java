@@ -44,7 +44,7 @@ public class ASAuthorizationFilter extends HttpFilter {
         chain.doFilter(request, response);
     }
 
-    private String processToken(String token) {
+    public static String processToken(String token) {
         return Optional.ofNullable(token)
                 .map(t -> t.replace("Bearer ", ""))
                 .orElse(null);

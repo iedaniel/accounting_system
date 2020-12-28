@@ -2,8 +2,10 @@ package com.system.accounting.service.registration;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.system.accounting.model.dto.TokenResponse;
 import com.system.accounting.model.dto.UserLogin;
+import com.system.accounting.model.dto.UserProfile;
 import com.system.accounting.model.dto.employee.EmployeeCreateRequest;
 import com.system.accounting.model.dto.employee.EmployeesResponse;
 import com.system.accounting.model.entity.EmployeeEntity;
@@ -54,7 +56,13 @@ public class UsersService {
                 .withSubject(user.getUsername())
                 .withExpiresAt(Date.from(Instant.now().plusSeconds(12 * 60 * 60)))
                 .withClaim("role", employeeEntity.getRole().name())
+                .withClaim("fio", employeeEntity.getFio())
                 .sign(Algorithm.HMAC512("test"));
         return new TokenResponse(token);
+    }
+
+    public UserProfile profile(String token) {
+        DecodedJWT decodedJWT = JWT.decode(token);
+        return new UserProfile(decodedJWT);
     }
 }

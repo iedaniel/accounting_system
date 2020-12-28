@@ -2,8 +2,10 @@ package com.system.accounting.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -34,4 +36,9 @@ public class EmployeeEntity {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Transient
+    public String getFio() {
+        return Strings.join(Arrays.asList(lastName, firstName, middleName), ' ');
+    }
 }
