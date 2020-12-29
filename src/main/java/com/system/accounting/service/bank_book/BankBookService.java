@@ -14,6 +14,8 @@ import com.system.accounting.model.dto.bank_book.lands.agricultures.AddAgricultu
 import com.system.accounting.model.dto.bank_book.lands.land_types.AddLandTypesRequest;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
 import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
+import com.system.accounting.model.dto.bank_book.transport.AllTransportResponse;
+import com.system.accounting.model.dto.bank_book.transport.TransportCreateRequest;
 import com.system.accounting.model.entity.*;
 import com.system.accounting.service.UserInfoService;
 import com.system.accounting.service.repository.*;
@@ -209,6 +211,29 @@ public class BankBookService {
             throw new RuntimeException("Не найден земельный участок");
         }
         return new LandResponse(land);
+    }
+
+    @Transactional
+    public AllTransportResponse getTransport(BankBookSpecifierRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        List<TransportEntity> transport = bankBook.getTransport();
+        return new AllTransportResponse(transport);
+    }
+
+    @Transactional
+    public void addTransport(TransportCreateRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        TransportEntity entity = new TransportEntity();
+        entity.setName(request.getName());
+        entity.setYear(request.getYear());
+        entity.setNum(request.getNum());
+        entity.setRights(request.getRights());
+        entity.setBankBook(bankBook);
+        entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
+        bankBook.getTransport().add(entity);
     }
 
     private BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {

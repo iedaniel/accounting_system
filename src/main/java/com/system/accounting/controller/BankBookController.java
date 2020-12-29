@@ -15,6 +15,7 @@ import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
 import com.system.accounting.model.dto.bank_book.lands.LandsResponse;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
 import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
+import com.system.accounting.model.dto.bank_book.transport.TransportCreateRequest;
 import com.system.accounting.service.bank_book.BankBookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -101,6 +102,18 @@ public class BankBookController {
     @ApiOperation("Добавить информацию о земельных культурах")
     public BaseResponse<?> addAgricultures(@RequestBody AddAgriculturesRequest request) {
         bankBookService.addAgricultures(request);
+        return new BaseResponse<>();
+    }
+
+    @PostMapping("/transport")
+    @ApiOperation("Показывает информацию о транспорте данного лицевого счета")
+    public BaseResponse<?> getTransport(@RequestBody BankBookSpecifierRequest request) {
+        return new BaseResponse<>(bankBookService.getTransport(request));
+    }
+
+    @PostMapping("/transport/add")
+    public BaseResponse<?> addTransport(@RequestBody TransportCreateRequest request) {
+        bankBookService.addTransport(request);
         return new BaseResponse<>();
     }
 }

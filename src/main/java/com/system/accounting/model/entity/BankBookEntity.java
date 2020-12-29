@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
 @Getter
 @Setter
@@ -47,12 +49,15 @@ public class BankBookEntity {
     @Column(name = "additional_info")
     private String additionalInfo;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankBook")
+    @OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "bankBook")
     private List<BankBookToFarmAnimalEntity> farmAnimals;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankBook")
+    @OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "bankBook")
     private List<ResidentEntity> residents;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankBook")
+    @OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "bankBook")
     private List<LandEntity> lands;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "bankBook")
+    private List<TransportEntity> transport;
 }
