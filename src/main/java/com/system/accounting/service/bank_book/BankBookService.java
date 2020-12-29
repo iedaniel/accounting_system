@@ -236,7 +236,7 @@ public class BankBookService {
         bankBook.getTransport().add(entity);
     }
 
-    private BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {
+    public BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {
         return bankBookRepository.findByNameAndHouseholdBookNameAndHouseholdBookKozhuunName(
                 request.getBankBookName(),
                 request.getHouseholdBookName(),

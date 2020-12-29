@@ -13,6 +13,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] allowedUrls = {
             "/users/login/**",
+            "/print/**",
             "/users/registration/**",
             "/ping/**",
             "/v2/api-docs",

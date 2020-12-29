@@ -2,6 +2,7 @@ package com.system.accounting.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -60,4 +61,12 @@ public class BankBookEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "bankBook")
     private List<TransportEntity> transport;
+
+    @Transient
+    public ResidentEntity mainResident() {
+        return getResidents().stream()
+                .filter(resident -> Strings.isBlank(resident.getRelation()))
+                .findFirst()
+                .orElse(null);
+    }
 }
