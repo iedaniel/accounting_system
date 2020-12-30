@@ -38,7 +38,7 @@ public class PrintService {
 
     private void putCarefully(Map<String, Object> map, String key, Object obj) {
         if (obj == null) {
-            map.put(key,  "");
+            map.put(key, "");
             return;
         }
         map.put(key, obj);
