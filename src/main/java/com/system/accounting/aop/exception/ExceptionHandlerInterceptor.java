@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * @author iedan@yandex.ru
+ * Перехват ошибок для возращения ответа на фронт
+ */
+
 @ControllerAdvice
 public class ExceptionHandlerInterceptor {
 

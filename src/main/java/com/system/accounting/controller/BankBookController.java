@@ -7,14 +7,15 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.dto.bank_book.BankBooksResponse;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
+import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
 import com.system.accounting.model.dto.bank_book.lands.LandResponse;
 import com.system.accounting.model.dto.bank_book.lands.LandSpecifierRequest;
+import com.system.accounting.model.dto.bank_book.lands.LandsResponse;
 import com.system.accounting.model.dto.bank_book.lands.agricultures.AddAgriculturesRequest;
 import com.system.accounting.model.dto.bank_book.lands.land_types.AddLandTypesRequest;
-import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
-import com.system.accounting.model.dto.bank_book.lands.LandsResponse;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
 import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
+import com.system.accounting.model.dto.bank_book.transport.AllTransportResponse;
 import com.system.accounting.model.dto.bank_book.transport.TransportCreateRequest;
 import com.system.accounting.service.bank_book.BankBookService;
 import io.swagger.annotations.Api;
@@ -107,7 +108,7 @@ public class BankBookController {
 
     @PostMapping("/transport")
     @ApiOperation("Показывает информацию о транспорте данного лицевого счета")
-    public BaseResponse<?> getTransport(@RequestBody BankBookSpecifierRequest request) {
+    public BaseResponse<AllTransportResponse> getTransport(@RequestBody BankBookSpecifierRequest request) {
         return new BaseResponse<>(bankBookService.getTransport(request));
     }
 

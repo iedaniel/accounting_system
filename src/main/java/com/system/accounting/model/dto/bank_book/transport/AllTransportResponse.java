@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Getter
 public class AllTransportResponse {
 
-    private List<TransportDto> transport;
+    private final List<TransportDto> transport;
 
     public AllTransportResponse(List<TransportEntity> entities) {
         this.transport = entities.stream()

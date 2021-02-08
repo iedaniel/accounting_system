@@ -16,6 +16,12 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author iedan@yandex.ru
+ *
+ * Конфигурация базы данных
+ */
+
 @Configuration
 @EnableJpaRepositories(
         basePackages = "com.system.accounting.service.repository",
