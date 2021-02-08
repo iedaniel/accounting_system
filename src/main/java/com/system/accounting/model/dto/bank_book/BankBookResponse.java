@@ -2,9 +2,11 @@ package com.system.accounting.model.dto.bank_book;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.system.accounting.model.entity.BankBookEntity;
+import com.system.accounting.model.entity.ResidentEntity;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Getter
 public class BankBookResponse {
@@ -23,7 +25,9 @@ public class BankBookResponse {
 
     public BankBookResponse(BankBookEntity entity) {
         this.name = entity.getName();
-        this.mainFio = entity.mainResident().getName();
+        this.mainFio = Optional.ofNullable(entity.mainResident())
+                .map(ResidentEntity::getName)
+                .orElse(null);
         this.creatorName = entity.getCreator().getLogin();
         this.closingDate = entity.getClosingDate();
         this.closingReason = entity.getClosingReason();
