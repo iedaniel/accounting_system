@@ -14,5 +14,5 @@ import java.util.List;
 public class AddLandTypesRequest extends BankBookSpecifierRequest {
 
     private String land;
-    List<LandTypeDto> landTypes;
+    private List<LandTypeDto> landTypes;
 }

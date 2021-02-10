@@ -43,6 +43,12 @@ public class ResidentEntity {
     @Column(name = "residence_mark")
     private String residenceMark;
 
+    @Column(name = "cancel_date")
+    private LocalDate cancelDate;
+
+    @Column(name = "cancel_reason")
+    private String cancelReason;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private EmployeeEntity creator;

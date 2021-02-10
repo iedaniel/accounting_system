@@ -14,6 +14,7 @@ import java.util.Optional;
 @NoArgsConstructor
 public class ResidentDto {
 
+    private Long id;
     private String name;
     private String relation;
     private String gender;
@@ -23,6 +24,7 @@ public class ResidentDto {
     private PassportDto passport;
 
     public ResidentDto(ResidentEntity entity) {
+        this.id = entity.getId();
         this.name = entity.getName();
         this.relation = entity.getRelation();
         this.gender = entity.getGender();

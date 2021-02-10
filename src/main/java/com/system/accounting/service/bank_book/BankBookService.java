@@ -14,6 +14,7 @@ import com.system.accounting.model.dto.bank_book.lands.agricultures.AddAgricultu
 import com.system.accounting.model.dto.bank_book.lands.land_types.AddLandTypesRequest;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
 import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
+import com.system.accounting.model.dto.bank_book.residents.CancelResidentRequest;
 import com.system.accounting.model.dto.bank_book.transport.AllTransportResponse;
 import com.system.accounting.model.dto.bank_book.transport.TransportCreateRequest;
 import com.system.accounting.model.entity.*;
@@ -43,6 +44,7 @@ public class BankBookService {
     private final LandRepository landRepository;
     private final AgricultureRepository agricultureRepository;
     private final LandCategoryRepository landCategoryRepository;
+    private final ResidentRepository residentRepository;
 
     @Transactional
     public void createBankBook(BankBookCreateRequest request) {
@@ -118,12 +120,21 @@ public class BankBookService {
     }
 
     @Transactional
+    public void cancelResident(CancelResidentRequest request) {
+        residentRepository.findById(request.getId())
+                .ifPresent(entity -> {
+                    entity.setCancelDate(request.getCancelDate());
+                    entity.setCancelReason(request.getCancelReason());
+                });
+    }
+
+    @Transactional
     public BookResidentsResponse getResidents(BankBookSpecifierRequest request) {
         BankBookEntity bankBook = getBankBookBySpecifiers(request);
         if (bankBook == null) {
             throw new RuntimeException("Не найден лицевой счёт");
         }
-        return new BookResidentsResponse(bankBook.getResidents());
+        return new BookResidentsResponse(residentRepository.getActiveResidents(bankBook));
     }
 
     @Transactional

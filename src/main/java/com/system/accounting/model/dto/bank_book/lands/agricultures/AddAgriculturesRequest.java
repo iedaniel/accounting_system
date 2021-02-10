@@ -14,5 +14,5 @@ import java.util.List;
 public class AddAgriculturesRequest extends BankBookSpecifierRequest {
 
     private String land;
-    List<AgricultureDto> agricultures;
+    private List<AgricultureDto> agricultures;
 }

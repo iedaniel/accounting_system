@@ -15,6 +15,7 @@ import com.system.accounting.model.dto.bank_book.lands.agricultures.AddAgricultu
 import com.system.accounting.model.dto.bank_book.lands.land_types.AddLandTypesRequest;
 import com.system.accounting.model.dto.bank_book.residents.AddResidentsRequest;
 import com.system.accounting.model.dto.bank_book.residents.BookResidentsResponse;
+import com.system.accounting.model.dto.bank_book.residents.CancelResidentRequest;
 import com.system.accounting.model.dto.bank_book.transport.AllTransportResponse;
 import com.system.accounting.model.dto.bank_book.transport.TransportCreateRequest;
 import com.system.accounting.service.bank_book.BankBookService;
@@ -64,6 +65,13 @@ public class BankBookController {
     @ApiOperation("Добавление членов хозяйства")
     public BaseResponse<?> addResidents(@RequestBody AddResidentsRequest request) {
         bankBookService.addResidents(request);
+        return new BaseResponse<>();
+    }
+
+    @PostMapping("/residents/cancellation")
+    @ApiOperation("Выбытие членов хозяйства")
+    public BaseResponse<?> cancelResident(@RequestBody CancelResidentRequest request) {
+        bankBookService.cancelResident(request);
         return new BaseResponse<>();
     }
 
