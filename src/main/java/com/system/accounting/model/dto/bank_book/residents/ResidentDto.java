@@ -22,6 +22,9 @@ public class ResidentDto {
     private LocalDate birthDate;
     private String residenceMark;
     private PassportDto passport;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDate cancelDate;
+    private String cancelReason;
 
     public ResidentDto(ResidentEntity entity) {
         this.id = entity.getId();
@@ -32,6 +35,8 @@ public class ResidentDto {
         this.residenceMark = entity.getResidenceMark();
         this.passport = Optional.ofNullable(entity.getPassport())
                 .map(PassportDto::new)
-                .orElse(null);;
+                .orElse(null);
+        this.cancelDate = entity.getCancelDate();
+        this.cancelReason = entity.getCancelReason();
     }
 }

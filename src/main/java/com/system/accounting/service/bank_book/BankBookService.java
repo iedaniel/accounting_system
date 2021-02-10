@@ -134,7 +134,7 @@ public class BankBookService {
         if (bankBook == null) {
             throw new RuntimeException("Не найден лицевой счёт");
         }
-        return new BookResidentsResponse(residentRepository.getActiveResidents(bankBook));
+        return new BookResidentsResponse(bankBook.getResidents());
     }
 
     @Transactional
