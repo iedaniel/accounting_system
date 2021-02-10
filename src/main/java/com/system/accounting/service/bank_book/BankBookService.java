@@ -1,9 +1,6 @@
 package com.system.accounting.service.bank_book;
 
-import com.system.accounting.model.dto.bank_book.BankBookCreateRequest;
-import com.system.accounting.model.dto.bank_book.BankBookSearchRequest;
-import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
-import com.system.accounting.model.dto.bank_book.BankBooksResponse;
+import com.system.accounting.model.dto.bank_book.*;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
 import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
@@ -64,6 +61,13 @@ public class BankBookService {
         entity.setInn(request.getInn());
         entity.setAdditionalInfo(request.getAdditionalInfo());
         bankBookRepository.save(entity);
+    }
+
+    @Transactional
+    public void closeBankBook(BankBookCloseRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        bankBook.setClosingDate(request.getCloseDate());
+        bankBook.setClosingReason(request.getCloseReason());
     }
 
     @Transactional

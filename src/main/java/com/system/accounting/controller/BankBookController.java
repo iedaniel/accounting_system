@@ -1,10 +1,7 @@
 package com.system.accounting.controller;
 
 import com.system.accounting.model.dto.BaseResponse;
-import com.system.accounting.model.dto.bank_book.BankBookCreateRequest;
-import com.system.accounting.model.dto.bank_book.BankBookSearchRequest;
-import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
-import com.system.accounting.model.dto.bank_book.BankBooksResponse;
+import com.system.accounting.model.dto.bank_book.*;
 import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimalsRequest;
 import com.system.accounting.model.dto.bank_book.farm_animals.BookFarmAnimalsResponse;
 import com.system.accounting.model.dto.bank_book.lands.LandCreateRequest;
@@ -39,6 +36,13 @@ public class BankBookController {
     @ApiOperation("Создание лицевого счёта для заданной похозяйственной книги")
     public BaseResponse<?> create(@RequestBody BankBookCreateRequest request) {
         bankBookService.createBankBook(request);
+        return new BaseResponse<>();
+    }
+
+    @PostMapping("/close")
+    @ApiOperation("Закрытие лицевого счета")
+    public BaseResponse<?> close(@RequestBody BankBookCloseRequest request) {
+        bankBookService.closeBankBook(request);
         return new BaseResponse<>();
     }
 
