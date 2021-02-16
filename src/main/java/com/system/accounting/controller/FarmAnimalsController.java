@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/farm_animals")
 @RequiredArgsConstructor
-@Api("Методы для работы с хозяйственными животными")
+@Api(tags = "Методы для работы с хозяйственными животными")
 public class FarmAnimalsController {
 
     private final FarmAnimalService farmAnimalService;

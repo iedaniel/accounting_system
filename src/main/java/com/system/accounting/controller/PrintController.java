@@ -2,6 +2,7 @@ package com.system.accounting.controller;
 
 import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.service.print.PrintService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/print")
 @RequiredArgsConstructor
+@Api(tags = "Печать документов")
 public class PrintController {
 
     private final PrintService printService;

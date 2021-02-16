@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/agriculture")
 @RequiredArgsConstructor
-@Api("Работа с видами сельскохозяйственных культур")
+@Api(tags = "Работа с видами сельскохозяйственных культур")
 public class AgricultureController {
 
     private final AgricultureService agricultureService;

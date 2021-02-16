@@ -18,13 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@Api("Контроллер, отвечающий за регистрацию пользователей")
+@Api(tags = "Операции сотрудников")
 public class UsersController {
 
     private final UsersService usersService;
 
     @PostMapping("/registration")
-    @ApiOperation("Метод регистрации новых пользователей")
+    @ApiOperation(value = "Метод регистрации новых пользователей")
     public BaseResponse<?> register(@RequestBody EmployeeCreateRequest request) {
         usersService.registration(request);
         return new BaseResponse<>();

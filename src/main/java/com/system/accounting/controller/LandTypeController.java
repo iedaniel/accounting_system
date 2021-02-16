@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/land_types")
 @RequiredArgsConstructor
-@Api("Добавление/показ видов земель")
+@Api(tags = "Добавление/показ видов земель")
 public class LandTypeController {
 
     private final LandTypeService landTypeService;

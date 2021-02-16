@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/kozhuuns/household_books/bank_books")
 @RequiredArgsConstructor
-@Api("Работа с лицевыми счетаим")
+@Api(tags = "Работа с лицевыми счетами")
 public class BankBookController {
 
     private final BankBookService bankBookService;

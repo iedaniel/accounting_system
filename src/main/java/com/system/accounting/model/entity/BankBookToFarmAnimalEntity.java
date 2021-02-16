@@ -4,8 +4,10 @@ import com.system.accounting.model.dto.bank_book.farm_animals.AddFarmAnimal;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
@@ -34,6 +36,10 @@ public class BankBookToFarmAnimalEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private EmployeeEntity creator;
+
+    @Column(name = "creation_date")
+    @CreationTimestamp
+    private LocalDate creationDate;
 
     public BankBookToFarmAnimalEntity(AddFarmAnimal request,
                                       BankBookEntity bankBook,

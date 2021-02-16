@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/kozhuuns")
 @RequiredArgsConstructor
-@Api("Работа с кожуунами")
+@Api(tags = "Работа с кожуунами")
 public class KozhuunController {
 
     private final KozhuunService kozhuunService;

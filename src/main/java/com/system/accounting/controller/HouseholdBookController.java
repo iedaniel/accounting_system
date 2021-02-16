@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/kozhuuns/household_books")
 @RequiredArgsConstructor
-@Api("Работа с похозяйственными книгами")
+@Api(tags = "Работа с похозяйственными книгами")
 public class HouseholdBookController {
 
     private final HouseholdBookService householdBookService;
