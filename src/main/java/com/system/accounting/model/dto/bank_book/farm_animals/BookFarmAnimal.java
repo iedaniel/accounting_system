@@ -11,7 +11,7 @@ public class BookFarmAnimal {
 
     private final String name;
     private final String parentName;
-    private final String value;
+    private final Integer value;
 
     public BookFarmAnimal(BankBookToFarmAnimalEntity entity) {
         this.name = entity.getFarmAnimal().getName();

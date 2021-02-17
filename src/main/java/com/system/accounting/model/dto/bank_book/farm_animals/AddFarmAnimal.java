@@ -10,5 +10,5 @@ import lombok.Setter;
 public class AddFarmAnimal {
 
     private String name;
-    private String value;
+    private Integer value;
 }

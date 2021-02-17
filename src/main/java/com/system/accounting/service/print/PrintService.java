@@ -4,6 +4,7 @@ import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
 import com.system.accounting.model.entity.BankBookEntity;
 import com.system.accounting.model.entity.ResidentEntity;
 import com.system.accounting.service.bank_book.BankBookService;
+import com.system.accounting.service.repository.FarmAnimalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class PrintService {
 
     private final BankBookService bankBookService;
+    private final FarmAnimalRepository farmAnimalRepository;
 
     @Transactional
     public Map<String, Object> printBankBook(BankBookSpecifierRequest request) {
@@ -33,6 +36,26 @@ public class PrintService {
         putCarefully(model, "month", Optional.ofNullable(resident.getBirthDate()).map(LocalDate::getMonth).orElse(null));
         putCarefully(model, "year", Optional.ofNullable(resident.getBirthDate()).map(LocalDate::getYear).orElse(null));
         putCarefully(model, "current_date", LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        return model;
+    }
+
+    @Transactional
+    public Map<String, Object> printBankBookSummary(BankBookSpecifierRequest request) {
+        Map<String, Object> model = new HashMap<>();
+        BankBookEntity bankBook = bankBookService.getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        List<FarmAnimalRepository.BBSummary> bbSummaryAnimals = farmAnimalRepository.findBBSummary(bankBook.getId());
+        model.put("animals", bbSummaryAnimals);
+        model.put("sumon", bankBook.getHouseholdBook().getVillageName());
+        model.put("kozhuun", bankBook.getHouseholdBook().getKozhuun().getName());
+        model.put("householdBook", bankBook.getHouseholdBook().getName());
+        String mainResidentName = Optional.ofNullable(bankBook.mainResident())
+                .map(ResidentEntity::getName)
+                .orElse("");
+        model.put("mainResident", mainResidentName);
+        model.put("bankBook", bankBook.getName());
         return model;
     }
 

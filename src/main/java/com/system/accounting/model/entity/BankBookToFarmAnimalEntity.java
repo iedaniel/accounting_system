@@ -32,7 +32,7 @@ public class BankBookToFarmAnimalEntity {
     private FarmAnimalEntity farmAnimal;
 
     @Column(name = "value")
-    private String value;
+    private Integer value;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
