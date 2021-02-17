@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
@@ -39,7 +40,7 @@ public class BankBookToFarmAnimalEntity {
 
     @Column(name = "creation_date")
     @CreationTimestamp
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     public BankBookToFarmAnimalEntity(AddFarmAnimal request,
                                       BankBookEntity bankBook,
