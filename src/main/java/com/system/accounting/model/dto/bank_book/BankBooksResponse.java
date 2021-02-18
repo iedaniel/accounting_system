@@ -1,6 +1,5 @@
 package com.system.accounting.model.dto.bank_book;
 
-import com.system.accounting.model.entity.BankBookEntity;
 import com.system.accounting.service.repository.BankBookRepository;
 import lombok.Getter;
 

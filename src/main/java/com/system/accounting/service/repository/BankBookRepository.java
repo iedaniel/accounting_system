@@ -16,6 +16,18 @@ public interface BankBookRepository extends JpaRepository<BankBookEntity, Long> 
 
     BankBookEntity findByNameAndHouseholdBookNameAndHouseholdBookKozhuunName(String name, String houseName, String kozhuunName);
 
+    @Query("select distinct " +
+            "b          as bankBook, " +
+            "r.name     as mainFio " +
+            "from BankBookEntity b " +
+            "join ResidentEntity r on r.bankBook = b " +
+            "where lower(b.name) like ?1 " +
+            "or lower(b.householdBook.name) like ?1 " +
+            "or lower(b.householdBook.kozhuun.name) like ?1 " +
+            "or lower(b.householdBook.villageName) like ?1 " +
+            "or lower(r.name) like ?1")
+    List<BankBookWithMainResident> findAllByQuery(String query);
+
     interface BankBookWithMainResident {
 
         BankBookEntity getBankBook();
