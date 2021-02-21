@@ -1,6 +1,8 @@
 package com.system.accounting.model.dto.bank_book;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.system.accounting.model.entity.BankBookEntity;
+import com.system.accounting.model.entity.HouseholdBookEntity;
 import com.system.accounting.service.repository.BankBookRepository.BankBookWithMainResident;
 import lombok.Getter;
 
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 public class BankBookResponse {
 
     private final String name;
+    private final String householdBookName;
+    private final String kozhuunName;
     private final String mainFio;
     private final String creatorName;
     @JsonFormat(pattern = "dd.MM.yyyy")
@@ -22,14 +26,18 @@ public class BankBookResponse {
     private final LocalDate creationDate;
 
     public BankBookResponse(BankBookWithMainResident entity) {
-        this.name = entity.getBankBook().getName();
+        BankBookEntity bankBook = entity.getBankBook();
+        this.name = bankBook.getName();
+        HouseholdBookEntity householdBook = bankBook.getHouseholdBook();
+        this.householdBookName = householdBook.getName();
+        this.kozhuunName = householdBook.getKozhuun().getName();
         this.mainFio = entity.getMainFio();
-        this.creatorName = entity.getBankBook().getCreator().getLogin();
-        this.closingDate = entity.getBankBook().getClosingDate();
-        this.closingReason = entity.getBankBook().getClosingReason();
-        this.address = entity.getBankBook().getAddress();
-        this.inn = entity.getBankBook().getInn();
-        this.additionalInfo = entity.getBankBook().getAdditionalInfo();
-        this.creationDate = entity.getBankBook().getCreationDate();
+        this.creatorName = bankBook.getCreator().getLogin();
+        this.closingDate = bankBook.getClosingDate();
+        this.closingReason = bankBook.getClosingReason();
+        this.address = bankBook.getAddress();
+        this.inn = bankBook.getInn();
+        this.additionalInfo = bankBook.getAdditionalInfo();
+        this.creationDate = bankBook.getCreationDate();
     }
 }
