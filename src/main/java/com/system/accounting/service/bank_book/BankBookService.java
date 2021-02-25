@@ -229,6 +229,15 @@ public class BankBookService {
     }
 
     @Transactional
+    public BankBookResponse get(BankBookSpecifierRequest request) {
+        BankBookEntity bankBook = getBankBookBySpecifiers(request);
+        if (bankBook == null) {
+            throw new RuntimeException("Не найден лицевой счёт");
+        }
+        return new BankBookResponse(bankBook, bankBook.mainResident().getName());
+    }
+
+    @Transactional
     public AllTransportResponse getTransport(BankBookSpecifierRequest request) {
         BankBookEntity bankBook = getBankBookBySpecifiers(request);
         List<TransportEntity> transport = bankBook.getTransport();

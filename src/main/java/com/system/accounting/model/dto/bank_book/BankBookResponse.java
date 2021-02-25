@@ -26,12 +26,15 @@ public class BankBookResponse {
     private final LocalDate creationDate;
 
     public BankBookResponse(BankBookWithMainResident entity) {
-        BankBookEntity bankBook = entity.getBankBook();
+        this(entity.getBankBook(), entity.getMainFio());
+    }
+
+    public BankBookResponse(BankBookEntity bankBook, String mainFio) {
         this.name = bankBook.getName();
         HouseholdBookEntity householdBook = bankBook.getHouseholdBook();
         this.householdBookName = householdBook.getName();
         this.kozhuunName = householdBook.getKozhuun().getName();
-        this.mainFio = entity.getMainFio();
+        this.mainFio = mainFio;
         this.creatorName = bankBook.getCreator().getLogin();
         this.closingDate = bankBook.getClosingDate();
         this.closingReason = bankBook.getClosingReason();

@@ -65,6 +65,12 @@ public class BankBookController {
         return new BaseResponse<>(bankBookService.getAnimals(request));
     }
 
+    @PostMapping("/get")
+    @ApiOperation("Показ информации об одном лицевом счете")
+    public BaseResponse<BankBookResponse> get(@RequestBody BankBookSpecifierRequest request) {
+        return new BaseResponse<>(bankBookService.get(request));
+    }
+
     @PostMapping("/residents/add")
     @ApiOperation("Добавление членов хозяйства")
     public BaseResponse<?> addResidents(@RequestBody AddResidentsRequest request) {
