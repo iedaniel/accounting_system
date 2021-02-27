@@ -30,7 +30,7 @@ public class UsersService {
         EmployeeEntity employeeEntity = new EmployeeEntity();
         employeeEntity.setLogin(request.getLogin());
         employeeEntity.setPassword(request.getPassword());
-        employeeEntity.setRole(EmployeeType.ORDINARY);
+        employeeEntity.setRole(request.getRole());
         employeeEntity.setFirstName(request.getFirstName());
         employeeEntity.setMiddleName(request.getMiddleName());
         employeeEntity.setLastName(request.getLastName());
