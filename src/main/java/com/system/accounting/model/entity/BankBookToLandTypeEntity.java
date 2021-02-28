@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class BankBookToLandTypeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bank_book_to_land_type_id_seq")
-    @SequenceGenerator(name = "bank_book_to_land_type_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "land_to_land_type_id_seq")
+    @SequenceGenerator(name = "land_to_land_type_id_seq", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
