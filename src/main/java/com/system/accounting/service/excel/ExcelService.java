@@ -1,6 +1,8 @@
 package com.system.accounting.service.excel;
 
+import com.system.accounting.model.entity.BankBookEntity;
 import com.system.accounting.model.entity.KozhuunEntity;
+import com.system.accounting.service.repository.BankBookRepository;
 import com.system.accounting.service.repository.KozhuunRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
@@ -9,53 +11,73 @@ import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Component
 @RequiredArgsConstructor
 public class ExcelService {
 
     private final KozhuunRepository kozhuunRepository;
+    private final BankBookRepository bankBookRepository;
 
     public Workbook excel() {
         Workbook wb = new XSSFWorkbook();
+        CellStyle firstRowCellStyle = createFirstRowCellStyle(wb);
+        CellStyle secondRowStyle = createSecondRowStyle(wb);
         kozhuunRepository.findAll()
-                .forEach(e -> getKozhuunSheet(wb, e));
+                .forEach(e -> getKozhuunSheet(wb, e, secondRowStyle, firstRowCellStyle));
         return wb;
     }
 
-    private void getKozhuunSheet(Workbook wb, KozhuunEntity kozhuun) {
+    private void getKozhuunSheet(Workbook wb, KozhuunEntity kozhuun, CellStyle secondRowStyle, CellStyle firstRowCellStyle) {
         Sheet sheet = wb.createSheet(kozhuun.getName());
         setWidth(sheet);
-        createFirstRow(wb, sheet);
-        createSecondRow(wb, sheet);
+        createFirstRow(sheet, firstRowCellStyle);
+        createSecondRow(wb, sheet, secondRowStyle);
+        AtomicInteger lastRow = new AtomicInteger(2);
+        bankBookRepository.findAllByKozhuunName(kozhuun.getName())
+                .forEach(e -> {
+                    int rowStart = lastRow.get();
+                    Row row = sheet.createRow(lastRow.get());
+                    BankBookEntity bankBook = e.getBankBook();
+                    row.createCell(0).setCellValue(bankBook.getName());
+                    row.createCell(1).setCellValue(e.getVillage());
+                    row.createCell(2).setCellValue(e.getMainFio());
+                    row.createCell(3).setCellValue(bankBook.getInn());
+                    lastRow.getAndIncrement();
+                });
     }
 
-    private void createSecondRow(Workbook wb, Sheet sheet) {
+    private void createSecondRow(Workbook wb, Sheet sheet, CellStyle secondRowStyle) {
         Row secondRow = sheet.createRow(1);
         secondRow.setHeight((short) 800);
-
-        createGreenHeading(wb, secondRow, 0, "№ л.с.");
-        createGreenHeading(wb, secondRow, 1, "Село (сумон)");
-        createGreenHeading(wb, secondRow, 2, "ФИО главного по хозяйству");
-        createGreenHeading(wb, secondRow, 3, "ИНН");
-        createGreenHeading(wb, secondRow, 4, "Паспортные данные");
-        createGreenHeading(wb, secondRow, 5, "Адрес хозяйства");
-        createGreenHeading(wb, secondRow, 6, "ФИО члена хозяйства");
-        createGreenHeading(wb, secondRow, 7, "Родство");
-        createGreenHeading(wb, secondRow, 8, "Кадастровый номер\n участка");
-        createGreenHeading(wb, secondRow, 9, "Категория земель");
-        createGreenHeading(wb, secondRow, 10, "Общая площадь\n земли");
-        createGreenHeading(wb, secondRow, 11, "Наименование");
-        createGreenHeading(wb, secondRow, 12, "Количество");
-        createGreenHeading(wb, secondRow, 13, "Год выпуска");
-        createGreenHeading(wb, secondRow, 14, "Право пользования");
-        createGreenHeading(wb, secondRow, 15, "Количество");
-        createGreenHeading(wb, secondRow, 16, "Наименование");
-        createGreenHeading(wb, secondRow, 17, "Дата изменения \n данных");
+        createGreenHeading(secondRow, 0, "№ л.с.", secondRowStyle);
+        createGreenHeading(secondRow, 1, "Село (сумон)", secondRowStyle);
+        createGreenHeading(secondRow, 2, "ФИО главного по хозяйству", secondRowStyle);
+        createGreenHeading(secondRow, 3, "ИНН", secondRowStyle);
+        createGreenHeading(secondRow, 4, "Паспортные данные", secondRowStyle);
+        createGreenHeading(secondRow, 5, "Адрес хозяйства", secondRowStyle);
+        createGreenHeading(secondRow, 6, "ФИО члена хозяйства", secondRowStyle);
+        createGreenHeading(secondRow, 7, "Родство", secondRowStyle);
+        createGreenHeading(secondRow, 8, "Кадастровый номер\n участка", secondRowStyle);
+        createGreenHeading(secondRow, 9, "Категория земель", secondRowStyle);
+        createGreenHeading(secondRow, 10, "Общая площадь\n земли", secondRowStyle);
+        createGreenHeading(secondRow, 11, "Наименование", secondRowStyle);
+        createGreenHeading(secondRow, 12, "Количество", secondRowStyle);
+        createGreenHeading(secondRow, 13, "Год выпуска", secondRowStyle);
+        createGreenHeading(secondRow, 14, "Право пользования", secondRowStyle);
+        createGreenHeading(secondRow, 15, "Количество", secondRowStyle);
+        createGreenHeading(secondRow, 16, "Наименование", secondRowStyle);
+        createGreenHeading(secondRow, 17, "Дата изменения \n данных", secondRowStyle);
     }
 
-    private void createGreenHeading(Workbook wb, Row secondRow, int column, String value) {
+    private void createGreenHeading(Row secondRow, int column, String value, CellStyle secondRowStyle) {
         Cell cell = secondRow.createCell(column);
         cell.setCellValue(value);
+        cell.setCellStyle(secondRowStyle);
+    }
+
+    private CellStyle createSecondRowStyle(Workbook wb) {
         CellStyle cellStyle = wb.createCellStyle();
         cellStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
         cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
@@ -70,13 +92,12 @@ public class ExcelService {
         cellStyle.setWrapText(true);
         cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         cellStyle.setAlignment(HorizontalAlignment.CENTER);
-        cell.setCellStyle(cellStyle);
+        return cellStyle;
     }
 
-    private void createFirstRow(Workbook wb, Sheet sheet) {
+    private void createFirstRow(Sheet sheet, CellStyle firstRowCellStyle) {
         Row firstRow = createFirstRow(sheet);
-        CellStyle firstRowStyle = createFirstRowCellStyle(wb);
-        createHeadings(sheet, firstRow, firstRowStyle);
+        createHeadings(sheet, firstRow, firstRowCellStyle);
     }
 
     private void createHeadings(Sheet sheet, Row firstRow, CellStyle firstRowStyle) {
