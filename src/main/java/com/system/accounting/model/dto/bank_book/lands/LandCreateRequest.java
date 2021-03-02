@@ -15,7 +15,7 @@ public class LandCreateRequest extends BankBookSpecifierRequest {
 
     private String cadastralNumber;
     private String landCategory;
-    private String totalArea;
+    private Double totalArea;
     private String document;
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate documentEndDate;

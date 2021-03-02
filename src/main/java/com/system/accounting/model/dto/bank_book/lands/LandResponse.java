@@ -15,7 +15,7 @@ public class LandResponse {
 
     private final String cadastralNumber;
     private final String landCategory;
-    private final String totalArea;
+    private final Double totalArea;
     private final String document;
     @JsonFormat(pattern = "dd.MM.yyyy")
     private final LocalDate documentEndDate;

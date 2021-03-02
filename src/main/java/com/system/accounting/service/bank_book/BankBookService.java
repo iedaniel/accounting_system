@@ -179,10 +179,10 @@ public class BankBookService {
         }
         LandEntity land = landRepository.findByBankBookAndCadastralNumber(bankBook, request.getLand());
         EmployeeEntity creator = employeeRepository.findByLogin(userInfoService.currentUserLogin());
-        List<BankBookToLandTypeEntity> landTypes = request.getLandTypes().stream()
+        List<LandToLandTypeEntity> landTypes = request.getLandTypes().stream()
                 .map(landType -> {
                     LandTypeEntity landTypeEntity = landTypeRepository.findByName(landType.getLandType());
-                    BankBookToLandTypeEntity entity = new BankBookToLandTypeEntity();
+                    LandToLandTypeEntity entity = new LandToLandTypeEntity();
                     entity.setLand(land);
                     entity.setLandType(landTypeEntity);
                     entity.setValue(landType.getValue());

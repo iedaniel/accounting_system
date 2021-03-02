@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "land_to_land_type")
 @NoArgsConstructor
-public class BankBookToLandTypeEntity {
+public class LandToLandTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "land_to_land_type_id_seq")
@@ -27,7 +27,7 @@ public class BankBookToLandTypeEntity {
     private LandTypeEntity landType;
 
     @Column(name = "value")
-    private String value;
+    private Double value;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")

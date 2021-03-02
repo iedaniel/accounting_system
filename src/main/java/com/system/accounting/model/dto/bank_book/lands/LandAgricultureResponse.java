@@ -11,7 +11,7 @@ public class LandAgricultureResponse {
 
     private final String agriculture;
     private final String parentAgriculture;
-    private final String area;
+    private final Double area;
     private final String creatorName;
 
     public LandAgricultureResponse(LandToAgricultureEntity entity) {

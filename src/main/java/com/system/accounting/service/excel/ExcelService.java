@@ -2,7 +2,9 @@ package com.system.accounting.service.excel;
 
 import com.system.accounting.model.entity.BankBookEntity;
 import com.system.accounting.model.entity.KozhuunEntity;
+import com.system.accounting.model.entity.TransportEntity;
 import com.system.accounting.service.repository.BankBookRepository;
+import com.system.accounting.service.repository.BankBookRepository.BankBookWithInfo;
 import com.system.accounting.service.repository.KozhuunRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
@@ -11,7 +13,11 @@ import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 @RequiredArgsConstructor
@@ -34,18 +40,95 @@ public class ExcelService {
         setWidth(sheet);
         createFirstRow(sheet, firstRowCellStyle);
         createSecondRow(wb, sheet, secondRowStyle);
+
         AtomicInteger lastRow = new AtomicInteger(2);
-        bankBookRepository.findAllByKozhuunName(kozhuun.getName())
-                .forEach(e -> {
-                    int rowStart = lastRow.get();
-                    Row row = sheet.createRow(lastRow.get());
-                    BankBookEntity bankBook = e.getBankBook();
-                    row.createCell(0).setCellValue(bankBook.getName());
-                    row.createCell(1).setCellValue(e.getVillage());
-                    row.createCell(2).setCellValue(e.getMainFio());
-                    row.createCell(3).setCellValue(bankBook.getInn());
-                    lastRow.getAndIncrement();
-                });
+        Map<BankBookEntity, Boolean> used = new HashMap<>();
+        List<BankBookWithInfo> bankBooks = bankBookRepository.findAllByKozhuunName(kozhuun.getName());
+        Map<BankBookEntity, List<List<String>>> bankBookToAnimals = new HashMap<>();
+        Map<BankBookEntity, List<List<String>>> bankBookToResidents = new HashMap<>();
+        Map<BankBookEntity, List<List<String>>> bankbookToLands = new HashMap<>();
+        Map<BankBookEntity, List<TransportEntity>> bankBookToTransport = new HashMap<>();
+        bankBooks.forEach(e -> {
+            BankBookEntity bankBook = e.getBankBook();
+            bankBookToAnimals.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(Arrays.asList(e.getAnimalName(), e.getAnimalCount()));
+            bankBookToResidents.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(Arrays.asList(e.getResidentName(), e.getRelation()));
+            bankbookToLands.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(Arrays.asList(e.getCadastralNumber(), e.getLandCategory(), "" + e.getTotalArea()));
+            bankBookToTransport.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(e.getTransport());
+        });
+        bankBooks.forEach(e -> {
+            int startRow = lastRow.get();
+            Row row = sheet.createRow(lastRow.get());
+            BankBookEntity bankBook = e.getBankBook();
+            if (used.computeIfAbsent(bankBook, __ -> false)) {
+                return;
+            }
+            used.put(bankBook, true);
+            row.createCell(0).setCellValue(bankBook.getName());
+            row.createCell(1).setCellValue(e.getVillage());
+            row.createCell(3).setCellValue(bankBook.getInn());
+            row.createCell(5).setCellValue(bankBook.getAddress());
+            List<List<String>> animals = bankBookToAnimals.get(bankBook).stream().distinct().collect(Collectors.toList());
+            IntStream.range(startRow, startRow + animals.size())
+                    .forEach(i -> {
+                        Row animalRow;
+                        if (i > lastRow.get()) {
+                            animalRow = sheet.createRow(lastRow.incrementAndGet());
+                        } else {
+                            animalRow = sheet.getRow(i);
+                        }
+                        animalRow.createCell(15).setCellValue(animals.get(i - startRow).get(1));
+                        animalRow.createCell(16).setCellValue(animals.get(i - startRow).get(0));
+                    });
+            List<List<String>> residents = bankBookToResidents.get(bankBook)
+                    .stream()
+                    .distinct()
+                    .sorted(Comparator.comparing(Function.identity(), (l1, l2) -> l1.get(1) == null ? -1 : 1))
+                    .collect(Collectors.toList());
+            row.createCell(2).setCellValue(residents.get(0).get(0));
+            IntStream.range(startRow, startRow + residents.size())
+                    .forEach(i -> {
+                        Row residentRow;
+                        if (i > lastRow.get()) {
+                            residentRow = sheet.createRow(lastRow.incrementAndGet());
+                        } else {
+                            residentRow = sheet.getRow(i);
+                        }
+                        residentRow.createCell(6).setCellValue(residents.get(i - startRow).get(0));
+                        residentRow.createCell(7).setCellValue(residents.get(i - startRow).get(1));
+                    });
+            List<List<String>> lands = bankbookToLands.get(bankBook).stream().distinct().collect(Collectors.toList());
+            IntStream.range(startRow, startRow + lands.size())
+                    .forEach(i -> {
+                        Row landRow;
+                        if (i > lastRow.get()) {
+                            landRow = sheet.createRow(lastRow.incrementAndGet());
+                        } else {
+                            landRow = sheet.getRow(i);
+                        }
+                        landRow.createCell(8).setCellValue(lands.get(i - startRow).get(0));
+                        landRow.createCell(9).setCellValue(lands.get(i - startRow).get(1));
+                        landRow.createCell(10).setCellValue(lands.get(i - startRow).get(2));
+                    });
+            List<TransportEntity> transport = bankBookToTransport.get(bankBook)
+                    .stream()
+                    .distinct()
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+            IntStream.range(startRow, startRow + transport.size())
+                    .forEach(i -> {
+                        Row transportRow;
+                        if (i > lastRow.get()) {
+                            transportRow = sheet.createRow(lastRow.incrementAndGet());
+                        } else {
+                            transportRow = sheet.getRow(i);
+                        }
+                        transportRow.createCell(11).setCellValue(transport.get(i - startRow).getName());
+                        transportRow.createCell(12).setCellValue(transport.get(i - startRow).getNum());
+                        transportRow.createCell(13).setCellValue(transport.get(i - startRow).getYear());
+                        transportRow.createCell(14).setCellValue(transport.get(i - startRow).getRights());
+                    });
+            lastRow.getAndIncrement();
+        });
     }
 
     private void createSecondRow(Workbook wb, Sheet sheet, CellStyle secondRowStyle) {

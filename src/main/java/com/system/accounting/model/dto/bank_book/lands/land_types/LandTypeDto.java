@@ -10,5 +10,5 @@ import lombok.Setter;
 public class LandTypeDto {
 
     private String landType;
-    private String value;
+    private Double value;
 }

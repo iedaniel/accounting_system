@@ -3,7 +3,6 @@ package com.system.accounting.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.util.Lazy;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -33,7 +32,7 @@ public class LandEntity {
     private LandCategoryEntity landCategory;
 
     @Column(name = "total_area")
-    private String totalArea;
+    private Double totalArea;
 
     @Column(name = "document")
     private String document;
@@ -46,7 +45,7 @@ public class LandEntity {
     private EmployeeEntity creator;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "land")
-    private List<BankBookToLandTypeEntity> landTypes;
+    private List<LandToLandTypeEntity> landTypes;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "land")
     private List<LandToAgricultureEntity> agricultures;

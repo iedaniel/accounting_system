@@ -27,7 +27,7 @@ public class LandToAgricultureEntity {
     private AgricultureEntity agriculture;
 
     @Column(name = "value")
-    private String area;
+    private Double area;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
