@@ -57,6 +57,10 @@ public class PrintService {
         putCarefully(model, "rights", Optional.ofNullable(land.getDocument()).orElse(null));
         putCarefully(model, "totalArea", Optional.ofNullable(land.getTotalArea()).orElse(null));
         putCarefully(model, "landCategory", Optional.ofNullable(land.getLandCategory().getName()).orElse(null));
+        putCarefully(model, "householdBook", bankBook.getHouseholdBook().getName());
+        putCarefully(model, "bankBook", bankBook.getName());
+        putCarefully(model, "village", bankBook.getHouseholdBook().getVillageName());
+        putCarefully(model, "kozhuun", bankBook.getHouseholdBook().getKozhuun().getName());
         return model;
     }
 
