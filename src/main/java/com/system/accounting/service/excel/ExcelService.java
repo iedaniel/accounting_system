@@ -40,6 +40,7 @@ public class ExcelService {
         setWidth(sheet);
         createFirstRow(sheet, firstRowCellStyle);
         createSecondRow(wb, sheet, secondRowStyle);
+        sheet.createFreezePane(3, 2);
 
         AtomicInteger lastRow = new AtomicInteger(2);
         Map<BankBookEntity, Boolean> used = new HashMap<>();
@@ -52,7 +53,7 @@ public class ExcelService {
             BankBookEntity bankBook = e.getBankBook();
             bankBookToAnimals.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(Arrays.asList(e.getAnimalName(), e.getAnimalCount()));
             bankBookToResidents.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(Arrays.asList(e.getResidentName(), e.getRelation()));
-            bankbookToLands.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(Arrays.asList(e.getCadastralNumber(), e.getLandCategory(), "" + e.getTotalArea()));
+            bankbookToLands.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(Arrays.asList(e.getCadastralNumber(), e.getLandCategory(), e.getTotalArea() == null ? "" : e.getTotalArea().toString()));
             bankBookToTransport.computeIfAbsent(bankBook, k -> new ArrayList<>()).add(e.getTransport());
         });
         bankBooks.forEach(e -> {

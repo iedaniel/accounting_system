@@ -1,6 +1,7 @@
 package com.system.accounting.controller;
 
 import com.system.accounting.model.dto.bank_book.BankBookSpecifierRequest;
+import com.system.accounting.model.dto.bank_book.lands.LandSpecifierRequest;
 import com.system.accounting.service.print.PrintService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class PrintController {
     private final PrintService printService;
 
     @GetMapping(value = "/bank_book")
-    public ModelAndView printBookRights(BankBookSpecifierRequest request) {
+    public ModelAndView printBookRights(LandSpecifierRequest request) {
         return new ModelAndView("bb_rights", printService.printBankBook(request));
     }
 
