@@ -67,4 +67,19 @@ public class ResidentEntity {
                 .map(PassportEntity::new)
                 .orElse(null);
     }
+
+    @Transient
+    public String getRelationStr() {
+        return relation == null ? "" : relation;
+    }
+
+    @Transient
+    public String getGenderStr() {
+        return gender == null ? "" : gender;
+    }
+
+    @Transient
+    public String getBirthDateStr() {
+        return birthDate == null ? "" : birthDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
 }

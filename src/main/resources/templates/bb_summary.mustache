@@ -54,7 +54,7 @@
     _______<u>{{mainResident}}</u>_______</FONT></P>
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><FONT FACE="Times New Roman, serif">Адрес
     хозяйства
-    _________________________________________________________________</FONT></P>
+    _____________<u>{{address}}</u>__________________________</FONT></P>
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><A NAME="_GoBack"></A>
     <FONT FACE="Times New Roman, serif">Лицевой счет
         ______<u>{{bankBook}}</u>______</FONT></P>
@@ -91,78 +91,28 @@
                 рождения</FONT></P>
         </TD>
     </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-        <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
+    {{#residents}}
+        <TR VALIGN=TOP>
+            <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P>{{name}}
+                </P>
+            </TD>
+            <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P>{{relationStr}}
+                </P>
+            </TD>
+            <TD WIDTH=142 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P>{{genderStr}}
+                </P>
+            </TD>
+            <TD WIDTH=141 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P>{{birthDateStr}}
+                </P>
+            </TD>
+        </TR>
+    {{/residents}}
+
+
 </TABLE>
 <P STYLE="margin-bottom: 0.11in; line-height: 100%">
 </P>
@@ -170,6 +120,7 @@
     <LI><P STYLE="margin-bottom: 0.11in; line-height: 100%"><FONT FACE="Times New Roman, serif">Скот
         в собственности:</FONT></P>
 </OL>
+{{#hasAnimals}}
 <TABLE WIDTH=623 CELLPADDING=7 CELLSPACING=0>
     <COL WIDTH=391>
     <COL WIDTH=202>
@@ -195,6 +146,7 @@
     </TR>
     {{/animals}}
 </TABLE>
+{{/hasAnimals}}
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><BR><BR>
 </P>
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><BR><BR>
@@ -205,6 +157,7 @@
         записанного первым в похозяйственной
         книге</FONT></P>
 </OL>
+{{#hasLand}}
 <TABLE WIDTH=623 CELLPADDING=7 CELLSPACING=0>
     <COL WIDTH=391>
     <COL WIDTH=202>
@@ -223,7 +176,7 @@
                 земельных участков</FONT></P>
         </TD>
         <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
+            <P>{{landsCnt}}
             </P>
         </TD>
     </TR>
@@ -232,50 +185,21 @@
             <P><FONT FACE="Times New Roman, serif">Всего земли</FONT></P>
         </TD>
         <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
+            <P>{{landsSum}} га.
             </P>
         </TD>
     </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Личное
-                подсобное хозяйство</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Крестьянское
-                (фермерское) хозяйство</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Служебный
-                земельный надел</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Земельная
-                доля</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
+    {{#landCategory}}
+        <TR VALIGN=TOP>
+            <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">{{categoryName}}</FONT></P>
+            </TD>
+            <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P>{{totalArea}} га.
+                </P>
+            </TD>
+        </TR>
+    {{/landCategory}}
     <TR VALIGN=TOP>
         <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
             <P><FONT FACE="Times New Roman, serif">Сведения о правах
@@ -328,138 +252,46 @@
     </TR>
     <TR VALIGN=TOP>
         <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Сельхозугодия</FONT></P>
+            <P><FONT FACE="Times New Roman, serif">По виду земель</FONT></P>
         </TD>
         <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
             <P><BR>
             </P>
         </TD>
     </TR>
+    {{#landTypes}}
     <TR VALIGN=TOP>
         <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Пашня</FONT></P>
+            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">{{name}}</FONT></P>
         </TD>
         <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
+            <P>{{area}} га.
             </P>
         </TD>
     </TR>
+    {{/landTypes}}
     <TR VALIGN=TOP>
         <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Многолетние
-                насаждения</FONT></P>
+            <P><FONT FACE="Times New Roman, serif">Площадь земли, занятой культурами</FONT></P>
         </TD>
         <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
             <P><BR>
             </P>
         </TD>
     </TR>
+    {{#agricultures}}
     <TR VALIGN=TOP>
         <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Сенокосы</FONT></P>
+            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">{{name}}</FONT></P>
         </TD>
         <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
+            <P>{{area}}
             </P>
         </TD>
     </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Пастбища</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Лесные земли</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Земли под постройки</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Посевные площади
-                всего</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Зерновые
-                культуры</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Картофель</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Овощи
-                (открытого и закрытого грунта)</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Подсолнечник
-                и зерно</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Сахарная
-                свекла</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P STYLE="margin-left: 0.41in"><FONT FACE="Times New Roman, serif">Кормовые
-                культуры</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
+    {{/agricultures}}
 </TABLE>
+{{/hasLand}}
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><BR><BR>
 </P>
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><BR><BR>
@@ -468,6 +300,7 @@
     <LI><P STYLE="margin-bottom: 0.11in; line-height: 100%"><FONT FACE="Times New Roman, serif">Технические
         средства в собственности</FONT></P>
 </OL>
+{{#hasTransport}}
 <TABLE WIDTH=623 CELLPADDING=7 CELLSPACING=0>
     <COL WIDTH=391>
     <COL WIDTH=202>
@@ -480,71 +313,20 @@
                 на дату оформления выписки</FONT></P>
         </TD>
     </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Тракторы</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Грузовые автомобили</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Прицепы и
-                полуприцепы</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Легковые автомобили</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Мотоциклы</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Моторные лодки</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
-    <TR VALIGN=TOP>
-        <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><FONT FACE="Times New Roman, serif">Другое</FONT></P>
-        </TD>
-        <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
-            <P><BR>
-            </P>
-        </TD>
-    </TR>
+
+    {{#transport}}
+        <TR VALIGN=TOP>
+            <TD WIDTH=391 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P><FONT FACE="Times New Roman, serif">{{name}}</FONT></P>
+            </TD>
+            <TD WIDTH=202 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P>{{num}}
+                </P>
+            </TD>
+        </TR>
+    {{/transport}}
 </TABLE>
+{{/hasTransport}}
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><BR><BR>
 </P>
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><BR><BR>
@@ -568,6 +350,6 @@
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><BR><BR>
 </P>
 <P STYLE="margin-bottom: 0.11in; line-height: 100%"><FONT FACE="Times New Roman, serif">Дата
-    «____»______________20___г.</FONT></P>
+    «_<u>{{curDay}}</u>_»____<u>{{curMonth}}</u>____<u>{{curYear}}</u>г.</FONT></P>
 </BODY>
 </HTML>

@@ -49,4 +49,7 @@ public class LandEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "land")
     private List<LandToAgricultureEntity> agricultures;
+
+    @Transient
+    private String categoryName;
 }
