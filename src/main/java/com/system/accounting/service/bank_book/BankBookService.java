@@ -86,13 +86,19 @@ public class BankBookService {
         }
         Map<String, FarmAnimalEntity> name2FarmAnimalMap = farmAnimalRepository.findAll().stream()
                 .collect(Collectors.toMap(FarmAnimalEntity::getName, Function.identity(), (e1, e2) -> e1));
-        List<BankBookToFarmAnimalEntity> farmAnimals = Optional.ofNullable(request.getAnimals())
+        List<BankBookToFarmAnimalEntity> newFarmAnimals = Optional.ofNullable(request.getAnimals())
                 .orElse(Collections.emptyList())
                 .stream()
                 .map(animal -> new BankBookToFarmAnimalEntity(animal, bankBook, name2FarmAnimalMap))
                 .peek(entity -> entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin())))
                 .collect(Collectors.toList());
-        bankBook.getFarmAnimals().addAll(farmAnimals);
+        List<BankBookToFarmAnimalEntity> oldFarmAnimals = bankBook.getFarmAnimals();
+        newFarmAnimals.forEach(newAnimal -> {
+            oldFarmAnimals.stream()
+                    .filter(oldAnimal -> oldAnimal.getFarmAnimal().equals(newAnimal.getFarmAnimal()))
+                    .findFirst()
+                    .ifPresentOrElse(oldAnimal -> oldAnimal.setValue(newAnimal.getValue()), () -> oldFarmAnimals.add(newAnimal));
+        });
     }
 
     @Transactional
