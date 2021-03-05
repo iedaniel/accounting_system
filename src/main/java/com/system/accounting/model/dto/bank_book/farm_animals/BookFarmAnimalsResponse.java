@@ -3,10 +3,8 @@ package com.system.accounting.model.dto.bank_book.farm_animals;
 import com.system.accounting.model.entity.BankBookToFarmAnimalEntity;
 import lombok.Getter;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Getter
@@ -30,6 +28,11 @@ public class BookFarmAnimalsResponse {
         });
         this.animals = uniqueEntities.stream()
                 .map(BookFarmAnimal::new)
+                .sorted(Comparator.comparing(Function.identity(), (e1, e2) -> {
+                    String parentName1 = e1.getParentName() == null ? e1.getName() : e1.getParentName();
+                    String parentName2 = e2.getParentName() == null ? e2.getName() : e2.getParentName();
+                    return parentName1.compareTo(parentName2);
+                }))
                 .collect(Collectors.toList());
     }
 }
