@@ -13,6 +13,7 @@ public class BankBookResponse {
 
     private final String name;
     private final String householdBookName;
+    private final String village;
     private final String kozhuunName;
     private final String mainFio;
     private final String creatorName;
@@ -33,6 +34,7 @@ public class BankBookResponse {
         this.name = bankBook.getName();
         HouseholdBookEntity householdBook = bankBook.getHouseholdBook();
         this.householdBookName = householdBook.getName();
+        this.village = householdBook.getVillageName();
         this.kozhuunName = householdBook.getKozhuun().getName();
         this.mainFio = mainFio;
         this.creatorName = bankBook.getCreator().getLogin();
