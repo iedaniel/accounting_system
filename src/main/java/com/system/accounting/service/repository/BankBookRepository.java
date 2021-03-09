@@ -34,7 +34,8 @@ public interface BankBookRepository extends JpaRepository<BankBookEntity, Long> 
             "left join LandEntity l on l.bankBook = b " +
             "left join LandCategoryEntity lc on lc = l.landCategory " +
             "left join TransportEntity t on t.bankBook = b " +
-            "where b.householdBook.kozhuun.name = ?1")
+            "where b.householdBook.kozhuun.name = ?1 " +
+            "and r.cancelDate is null")
     List<BankBookWithInfo> findAllByKozhuunName(String kozhuun);
 
     BankBookEntity findByNameAndHouseholdBookNameAndHouseholdBookKozhuunName(String name, String houseName, String kozhuunName);

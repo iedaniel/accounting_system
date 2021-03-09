@@ -84,6 +84,7 @@ public class PrintService {
         model.put("bankBook", bankBook.getName());
         model.put("address", Optional.ofNullable(bankBook.getAddress()).orElse(""));
         List<ResidentEntity> residents = bankBook.getResidents().stream()
+                .filter(e -> e.getCancelDate() != null)
                 .sorted(Comparator.comparing(ResidentEntity::getRelation, (e1, e2) -> e1 == null ? -1 : 1))
                 .collect(Collectors.toList());
         model.put("residents", residents);
