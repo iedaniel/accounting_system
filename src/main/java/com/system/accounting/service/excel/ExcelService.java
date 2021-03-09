@@ -13,11 +13,14 @@ import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -68,6 +71,10 @@ public class ExcelService {
             row.createCell(1).setCellValue(e.getVillage());
             row.createCell(3).setCellValue(bankBook.getInn());
             row.createCell(5).setCellValue(bankBook.getAddress());
+            Stream.of(e.getLandTime(), e.getResidentTime(), e.getTransportTime(), e.getAnimalTime())
+                    .filter(Objects::nonNull)
+                    .max(LocalDateTime::compareTo)
+                    .ifPresent(time -> row.createCell(17).setCellValue(time.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace('T', ' ')));
             List<List<String>> animals = bankBookToAnimals.get(bankBook).stream().distinct().collect(Collectors.toList());
             IntStream.range(startRow, startRow + animals.size())
                     .forEach(i -> {

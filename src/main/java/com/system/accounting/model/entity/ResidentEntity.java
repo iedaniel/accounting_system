@@ -4,9 +4,11 @@ import com.system.accounting.model.dto.bank_book.residents.ResidentDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
@@ -55,6 +57,10 @@ public class ResidentEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "resident")
     private PassportEntity passport;
+
+    @Column(name = "update_time")
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
 
     public ResidentEntity(ResidentDto request, BankBookEntity bankBook) {
         this.name = request.getName();

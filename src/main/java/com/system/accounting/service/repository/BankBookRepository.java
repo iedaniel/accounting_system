@@ -6,6 +6,7 @@ import com.system.accounting.model.entity.TransportEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BankBookRepository extends JpaRepository<BankBookEntity, Long> {
@@ -25,7 +26,11 @@ public interface BankBookRepository extends JpaRepository<BankBookEntity, Long> 
             "l.cadastralNumber as cadastralNumber, " +
             "lc.name as landCategory, " +
             "l.totalArea as totalArea, " +
-            "t as transport " +
+            "t as transport, " +
+            "l.updateTime as landTime, " +
+            "r.updateTime as residentTime, " +
+            "t.updateTime as transportTime, " +
+            "bf.creationDate as animalTime " +
             "from BankBookEntity b " +
             "left join ResidentEntity r on r.bankBook = b " +
             "left join PassportEntity p on p.resident = r " +
@@ -80,5 +85,13 @@ public interface BankBookRepository extends JpaRepository<BankBookEntity, Long> 
         Double getTotalArea();
 
         TransportEntity getTransport();
+
+        LocalDateTime getResidentTime();
+
+        LocalDateTime getLandTime();
+
+        LocalDateTime getTransportTime();
+
+        LocalDateTime getAnimalTime();
     }
 }

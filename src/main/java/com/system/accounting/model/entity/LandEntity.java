@@ -3,9 +3,11 @@ package com.system.accounting.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -49,6 +51,10 @@ public class LandEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "land")
     private List<LandToAgricultureEntity> agricultures;
+
+    @Column(name = "update_time")
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
 
     @Transient
     private String categoryName;

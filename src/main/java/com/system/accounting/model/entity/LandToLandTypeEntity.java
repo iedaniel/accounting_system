@@ -3,8 +3,10 @@ package com.system.accounting.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -32,4 +34,8 @@ public class LandToLandTypeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private EmployeeEntity creator;
+
+    @Column(name = "update_time")
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
 }
