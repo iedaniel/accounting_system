@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TransportCreateRequest extends BankBookSpecifierRequest {
 
+    private Long id;
     private String name;
     private Integer year;
     private Integer num;

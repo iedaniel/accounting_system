@@ -42,6 +42,7 @@ public class BankBookService {
     private final AgricultureRepository agricultureRepository;
     private final LandCategoryRepository landCategoryRepository;
     private final ResidentRepository residentRepository;
+    private final TransportRepository transportRepository;
 
     @Transactional
     public void createBankBook(BankBookCreateRequest request) {
@@ -256,14 +257,19 @@ public class BankBookService {
         if (bankBook == null) {
             throw new RuntimeException("Не найден лицевой счёт");
         }
-        TransportEntity entity = new TransportEntity();
+        TransportEntity entity = Optional.ofNullable(request.getId())
+                .map(transportRepository::findById)
+                .flatMap(Function.identity())
+                .orElse(new TransportEntity());
         entity.setName(request.getName());
         entity.setYear(request.getYear());
         entity.setNum(request.getNum());
         entity.setRights(request.getRights());
         entity.setBankBook(bankBook);
         entity.setCreator(employeeRepository.findByLogin(userInfoService.currentUserLogin()));
-        bankBook.getTransport().add(entity);
+        if (request.getId() == null) {
+            bankBook.getTransport().add(entity);
+        }
     }
 
     public BankBookEntity getBankBookBySpecifiers(BankBookSpecifierRequest request) {
